@@ -10,12 +10,16 @@ import com.gibaram.mvvm2nd.viewmodel.MainActivityViewModel
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //  setContentView(R.layout.activity_main)
 
+        // View Model 생성 (취득)
         val viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+
+
+        // this.setContentView 대신 DataBindingUtil.setContentView 사용
+        //  setContentView(R.layout.activity_main)
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)?.apply {
-            this.lifecycleOwner = this@MainActivity // 중요..
-            this.setVariable(BR.viewmodel, viewModel)
+            this.lifecycleOwner = this@MainActivity // 중요.. 데이터 변경 Observe
+            this.setVariable(BR.viewmodel, viewModel) // BR ???
         }
     }
 }
